@@ -75,4 +75,5 @@ DerivedDataCache/*
 
 # Content folder too LARGE to commit
 # It was taken from:https://github.com/AInsolence/QuarantineProject/blob/master/.gitignore
-Content/* 
+Content/*
+Content/Blueprints/Actors/* 
