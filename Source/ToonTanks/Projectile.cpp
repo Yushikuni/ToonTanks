@@ -7,6 +7,7 @@
 
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
 
 // Sets default values
@@ -22,9 +23,13 @@ AProjectile::AProjectile()
 
 	//Adding meshes and attachet them
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
-	ProjectileMesh->SetupAttachment(CapsuleComp);
+	ProjectileMesh->SetupAttachment(RootComponent);
 
 	ProjectileMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
+
+	//Add smoke trail
+	SmokeTrail = CreateDefaultSubobject< UParticleSystemComponent>(TEXT("Smoke Trail"));
+	SmokeTrail->SetupAttachment(RootComponent);
 
 	ProjectileMovementComp->MaxSpeed = 1500.f;
 	ProjectileMovementComp->InitialSpeed = 1500.f;

@@ -42,12 +42,15 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Projectile Damage")
 		float Damage = 50.f;
 
+	UPROPERTY(EditAnywhere, Category = "Projectile Movement")
+		class UParticleSystem* HitParticles;
+
+	UPROPERTY(VisibleAnywhere, Category = "Projectile Movement")
+		class UParticleSystemComponent* SmokeTrail;
+
 	//functions
 	UFUNCTION()
 		void OnHit(UPrimitiveComponent* HitCompm, AActor* OtherActor, UPrimitiveComponent* OtherComp,FVector NormalInpuls, const FHitResult& Hit);
-
-	UPROPERTY(EditAnywhere, Category = "Projectile Movement")
-		class UParticleSystem* HitParticles;
 
 public:
 	// Called every frame
