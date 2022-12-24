@@ -48,6 +48,12 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Projectile Movement")
 		class UParticleSystemComponent* SmokeTrail;
 
+	UPROPERTY(Editanywhere, Category = "Projectile Damage")
+		class USoundBase* LaunchSound;
+
+	UPROPERTY(Editanywhere, Category = "Projectile Damage")
+		USoundBase* HitSound;
+
 	//functions
 	UFUNCTION()
 		void OnHit(UPrimitiveComponent* HitCompm, AActor* OtherActor, UPrimitiveComponent* OtherComp,FVector NormalInpuls, const FHitResult& Hit);
