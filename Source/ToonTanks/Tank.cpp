@@ -43,6 +43,8 @@ void ATank::HandleDestruction()
 	//Schovam tank kvuli kamere ale hrac si za nej uz nezahraje
 	SetActorHiddenInGame(true);
 	SetActorTickEnabled(false);
+
+	bAlive = false;
 }
 
 // Called every frame

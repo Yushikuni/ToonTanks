@@ -20,6 +20,8 @@ public:
 
 	void HandleDestruction();
 
+	bool bAlive = true;
+
 protected:
 	//Rotation turret to enemy
 	void RotateTurret(FVector LookAtTarget);

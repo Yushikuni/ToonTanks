@@ -58,15 +58,15 @@ void AProjectile::Tick(float DeltaTime)
 //This is not working, I must do some overlaping :) but know I do not know how to do that
 void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalInpuls, const FHitResult& Hit)
 {
-	auto MyOwner = GetOwner();
+	AActor* MyOwner = GetOwner();
 	if (MyOwner == nullptr)
 	{
 		Destroy();
 		return;
 	}
 
-	auto MyOwnerInstigator = MyOwner->GetInstigatorController();
-	auto DamageClassType = UDamageType::StaticClass();
+	AController* MyOwnerInstigator = MyOwner->GetInstigatorController();
+	UClass* DamageClassType = UDamageType::StaticClass();
 
 	if (OtherActor && OtherActor != this && OtherActor != MyOwner)
 	{

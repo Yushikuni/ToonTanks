@@ -36,7 +36,11 @@ bool ATower::InFireRange()
 //Tower can fire to player
 void ATower::CheckFireCondition()
 {
-	if (InFireRange())
+	if (Tank == nullptr)
+	{
+		return;
+	}
+	if (InFireRange() && Tank->bAlive)
 	{
 		RotateTurret(Tank->GetActorLocation());
 		Fire();
