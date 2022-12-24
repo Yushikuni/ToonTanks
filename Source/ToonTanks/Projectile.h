@@ -54,6 +54,9 @@ private:
 	UPROPERTY(Editanywhere, Category = "Projectile Damage")
 		USoundBase* HitSound;
 
+	UPROPERTY(Editanywhere, Category = "Projectile Damage")
+		TSubclassOf<class UCameraShakeBase> HitCameraShakeClass;
+
 	//functions
 	UFUNCTION()
 		void OnHit(UPrimitiveComponent* HitCompm, AActor* OtherActor, UPrimitiveComponent* OtherComp,FVector NormalInpuls, const FHitResult& Hit);
