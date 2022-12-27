@@ -57,9 +57,11 @@ private:
 	UPROPERTY(Editanywhere, Category = "Projectile Damage")
 		TSubclassOf<class UCameraShakeBase> HitCameraShakeClass;
 
-	//functions
+	//functions	
 	UFUNCTION()
-		void OnHit(UPrimitiveComponent* HitCompm, AActor* OtherActor, UPrimitiveComponent* OtherComp,FVector NormalInpuls, const FHitResult& Hit);
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+		void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 public:
 	// Called every frame

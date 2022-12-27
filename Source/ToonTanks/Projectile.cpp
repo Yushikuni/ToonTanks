@@ -39,9 +39,11 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CapsuleComp->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
+	//CapsuleComp->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
+	CapsuleComp->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnOverlapBegin);
+	CapsuleComp->OnComponentEndOverlap.AddDynamic(this, &AProjectile::OnOverlapEnd);
 
-	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
+	//ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 
 	if (LaunchSound)
 	{
@@ -55,29 +57,30 @@ void AProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-//This is not working, I must do some overlaping :) but know I do not know how to do that
-void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalInpuls, const FHitResult& Hit)
+void AProjectile::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	AActor* MyOwner = GetOwner();
-	if (MyOwner == nullptr)
+	UE_LOG(LogTemp, Warning, TEXT("START Overlap"));
+	/*AActor* MyOwner = GetOwner();
+	/*if (MyOwner == nullptr)//<- chyba
 	{
 		Destroy();
 		return;
 	}
-
+	
 	AController* MyOwnerInstigator = MyOwner->GetInstigatorController();
 	UClass* DamageClassType = UDamageType::StaticClass();
-
+	
 	if (OtherActor && OtherActor != this && OtherActor != MyOwner)
 	{
-		UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwnerInstigator, this, DamageClassType);
+		//UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwnerInstigator, this, DamageClassType);//<- chyba
+		
 		
 		if (HitParticles)
 		{
 			UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, GetActorLocation(), GetActorRotation());
 		}
-		
-		if (HitSound)
+
+		/*if (HitSound)//<- chyba
 		{
 			UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
 		}
@@ -86,6 +89,14 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 			GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(HitCameraShakeClass);
 		}
 	}
-	Destroy();
+	//Destroy();//<- chyba
+	*/
 }
-
+void AProjectile::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	UE_LOG(LogTemp, Warning, TEXT("END overlap"));
+	/*if (OtherActor && (OtherActor != this) && OtherComp)
+	{
+		
+	}*/
+}
