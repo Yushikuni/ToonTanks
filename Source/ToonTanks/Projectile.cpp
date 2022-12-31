@@ -39,11 +39,8 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//CapsuleComp->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 	CapsuleComp->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnOverlapBegin);
 	CapsuleComp->OnComponentEndOverlap.AddDynamic(this, &AProjectile::OnOverlapEnd);
-
-	//ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 
 	if (LaunchSound)
 	{
@@ -59,44 +56,14 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("START Overlap"));
-	/*AActor* MyOwner = GetOwner();
-	/*if (MyOwner == nullptr)//<- chyba
-	{
-		Destroy();
-		return;
-	}
-	
-	AController* MyOwnerInstigator = MyOwner->GetInstigatorController();
-	UClass* DamageClassType = UDamageType::StaticClass();
-	
-	if (OtherActor && OtherActor != this && OtherActor != MyOwner)
-	{
-		//UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwnerInstigator, this, DamageClassType);//<- chyba
-		
-		
-		if (HitParticles)
-		{
-			UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, GetActorLocation(), GetActorRotation());
-		}
 
-		/*if (HitSound)//<- chyba
-		{
-			UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
-		}
-		if (HitCameraShakeClass)
-		{
-			GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(HitCameraShakeClass);
-		}
+	if(OtherActor && (OtherActor != this) && OtherComp)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("HITING something"));
+		UGameplayStatics::ApplyDamage(OtherActor, Damage, GetOwner()->GetInstigatorController(), this, UDamageType::StaticClass());
 	}
-	//Destroy();//<- chyba
-	*/
 }
 void AProjectile::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	UE_LOG(LogTemp, Warning, TEXT("END overlap"));
-	/*if (OtherActor && (OtherActor != this) && OtherComp)
-	{
-		
-	}*/
 }
