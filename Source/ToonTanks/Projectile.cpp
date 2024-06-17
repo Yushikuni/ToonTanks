@@ -22,7 +22,7 @@ AProjectile::AProjectile()
 
 	//Adding meshes and attachet them
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
-	ProjectileMesh->SetupAttachment(RootComponent);
+	//ProjectileMesh->SetupAttachment(RootComponent);
 
 	ProjectileMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
 
