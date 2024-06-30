@@ -56,8 +56,28 @@ void ABasePawn::RotateTurret(FVector LookAtTarget)
 
 void ABasePawn::Fire()
 {
-	FVector Location = ProjectileSpawnPoint->GetComponentLocation();
+	UE_LOG(LogTemp, Error, TEXT("FIRE!!!"));
+
 	FRotator Rotation = ProjectileSpawnPoint->GetComponentRotation();
+	FVector Location = ProjectileSpawnPoint->GetComponentLocation();
+	if (!ProjectileClass)
+	{
+		UE_LOG(LogTemp, Error, TEXT("ProjectileClass is null!"));
+		return;
+	}
+	UE_LOG(LogTemp, Warning, TEXT("ProjectileClass is NOT null!"));
+	if (!ProjectileSpawnPoint)
+	{
+		UE_LOG(LogTemp, Error, TEXT("ProjectileSpawnPoint is null!"));
+		return;
+	}
+	UE_LOG(LogTemp, Warning, TEXT("ProjectileSpawnPoint is null!"));
+	if (!GetWorld())
+	{
+		UE_LOG(LogTemp, Error, TEXT("GetWorld() returned null!"));
+		return;
+	}
+	UE_LOG(LogTemp, Warning, TEXT("GetWorld() returned null!"));
 	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, Location, Rotation);
 	Projectile->SetOwner(this);
 }
