@@ -58,14 +58,10 @@ void AProjectile::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, clas
 {
 	AController* InstigatorController = GetOwner() ? GetOwner()->GetInstigatorController():nullptr;
 
-	if(OtherActor && (OtherActor != this) && OtherComp)
+	if(OtherActor && (OtherActor != this) && OtherComp && InstigatorController)
 	{
-		UE_LOG(LogTemp, Warning, TE XT("HITING something"));
-		if (InstigatorController)
-		{
-			UGameplayStatics::ApplyDamage(OtherActor, Damage, InstigatorController, this, UDamageType::StaticClass());
-		}
-		
+		UE_LOG(LogTemp, Warning, TEXT("HITING something"));
+		UGameplayStatics::ApplyDamage(OtherActor, Damage, InstigatorController, this, UDamageType::StaticClass());	
 	}
 }
 void AProjectile::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
