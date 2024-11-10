@@ -62,7 +62,8 @@ void AProjectile::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, clas
 	if(OtherActor && (OtherActor != this) && OtherComp)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("HITING something"));
-		//UGameplayStatics::ApplyDamage(OtherActor, Damage, InstigatorController, this, UDamageType::StaticClass());	
+		//UGameplayStatics::ApplyDamage(OtherActor, Damage, InstigatorController, this, UDamageType::StaticClass());
+		Destroy();
 	}
 }
 void AProjectile::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
