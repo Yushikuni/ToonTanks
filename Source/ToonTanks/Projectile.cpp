@@ -42,6 +42,8 @@ void AProjectile::BeginPlay()
 	CapsuleComp->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnOverlapBegin);
 	CapsuleComp->OnComponentEndOverlap.AddDynamic(this, &AProjectile::OnOverlapEnd);
 
+	InstigatorController = GetOwner() ? GetOwner()->GetInstigatorController() : nullptr;
+
 	if (LaunchSound)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, LaunchSound, GetActorLocation());
@@ -56,12 +58,11 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	AController* InstigatorController = GetOwner() ? GetOwner()->GetInstigatorController():nullptr;
-
-	if(OtherActor && (OtherActor != this) && OtherComp && InstigatorController)
+	if (InstigatorController) UE_LOG(LogTemp, Warning, TEXT("Get owner is nullptr!!!!"));
+	if(OtherActor && (OtherActor != this) && OtherComp)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("HITING something"));
-		UGameplayStatics::ApplyDamage(OtherActor, Damage, InstigatorController, this, UDamageType::StaticClass());	
+		//UGameplayStatics::ApplyDamage(OtherActor, Damage, InstigatorController, this, UDamageType::StaticClass());	
 	}
 }
 void AProjectile::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
