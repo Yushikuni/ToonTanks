@@ -58,7 +58,7 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (InstigatorController) UE_LOG(LogTemp, Warning, TEXT("Get owner is nullptr!!!!"));
+	if (InstigatorController) UE_LOG(LogTemp, Error, TEXT("Get owner is nullptr!!!!"));
 	if(OtherActor && (OtherActor != this) && OtherComp)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("HITING something"));
