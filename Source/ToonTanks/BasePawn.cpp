@@ -28,6 +28,12 @@ ABasePawn::ABasePawn()
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Base"));
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
+
+	FRotator Rotation = ProjectileSpawnPoint->GetComponentRotation();
+	FVector Location = ProjectileSpawnPoint->GetComponentLocation();
+	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, Location, Rotation);
+
+	if(!Projectile) Projectile->SetOwner(this);
 }
 
 void ABasePawn::HandleDestruction()
@@ -58,8 +64,7 @@ void ABasePawn::Fire()
 {
 	UE_LOG(LogTemp, Error, TEXT("FIRE!!!"));
 
-	FRotator Rotation = ProjectileSpawnPoint->GetComponentRotation();
-	FVector Location = ProjectileSpawnPoint->GetComponentLocation();
+	
 	if (!ProjectileClass)
 	{
 		UE_LOG(LogTemp, Error, TEXT("ProjectileClass is null!"));
@@ -78,6 +83,6 @@ void ABasePawn::Fire()
 		return;
 	}
 	UE_LOG(LogTemp, Warning, TEXT("GetWorld() returned null!"));
-	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, Location, Rotation);
-	Projectile->SetOwner(this);
+	
+	
 }
