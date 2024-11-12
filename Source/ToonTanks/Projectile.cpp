@@ -22,7 +22,7 @@ AProjectile::AProjectile()
 
 	//Adding meshes and attachet them
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
-	//ProjectileMesh->SetupAttachment(RootComponent);
+	ProjectileMesh->SetupAttachment(RootComponent);
 
 	ProjectileMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
 
@@ -44,6 +44,7 @@ void AProjectile::BeginPlay()
 
 	InstigatorController = GetOwner() ? GetOwner()->GetInstigatorController() : nullptr;
 
+
 	if (LaunchSound)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, LaunchSound, GetActorLocation());
@@ -62,7 +63,7 @@ void AProjectile::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, clas
 	if(OtherActor && (OtherActor != this) && OtherComp)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("HITING something"));
-		//UGameplayStatics::ApplyDamage(OtherActor, Damage, InstigatorController, this, UDamageType::StaticClass());
+		UGameplayStatics::ApplyDamage(OtherActor, Damage, InstigatorController, this, UDamageType::StaticClass());
 		Destroy();
 	}
 }
