@@ -29,11 +29,7 @@ ABasePawn::ABasePawn()
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Base"));
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
 
-	FRotator Rotation = ProjectileSpawnPoint->GetComponentRotation();
-	FVector Location = ProjectileSpawnPoint->GetComponentLocation();
-	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, Location, Rotation);
 
-	if(!Projectile) Projectile->SetOwner(this);
 }
 
 void ABasePawn::HandleDestruction()
@@ -64,7 +60,8 @@ void ABasePawn::Fire()
 {
 	UE_LOG(LogTemp, Error, TEXT("FIRE!!!"));
 
-	
+	FRotator Rotation = ProjectileSpawnPoint->GetComponentRotation();
+	FVector Location = ProjectileSpawnPoint->GetComponentLocation();
 	if (!ProjectileClass)
 	{
 		UE_LOG(LogTemp, Error, TEXT("ProjectileClass is null!"));
@@ -76,13 +73,26 @@ void ABasePawn::Fire()
 		UE_LOG(LogTemp, Error, TEXT("ProjectileSpawnPoint is null!"));
 		return;
 	}
-	UE_LOG(LogTemp, Warning, TEXT("ProjectileSpawnPoint is null!"));
+	UE_LOG(LogTemp, Warning, TEXT("ProjectileSpawnPoint NOT null!"));
 	if (!GetWorld())
 	{
 		UE_LOG(LogTemp, Error, TEXT("GetWorld() returned null!"));
 		return;
 	}
-	UE_LOG(LogTemp, Warning, TEXT("GetWorld() returned null!"));
+	UE_LOG(LogTemp, Warning, TEXT("GetWorld() NOT null!"));
+
+	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, Location, Rotation);
+	if (IsValid(Projectile))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Projectile IS VALID!"));
+		Projectile->SetOwner(this);
+		
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Projectile IS NOT VALID!"));
+		return;
+	}
 	
 	
 }

@@ -68,4 +68,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	AController* InstigatorController;
+
+private:
+	AActor* OwnerActor;
 };

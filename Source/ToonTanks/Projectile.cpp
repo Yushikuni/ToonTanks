@@ -43,6 +43,10 @@ void AProjectile::BeginPlay()
 	CapsuleComp->OnComponentEndOverlap.AddDynamic(this, &AProjectile::OnOverlapEnd);
 
 	InstigatorController = GetOwner() ? GetOwner()->GetInstigatorController() : nullptr;
+	// Uložení vlastníka støely (instigatora)
+	OwnerActor = GetOwner();
+
+	DrawDebugSphere(GetWorld(), GetActorLocation(), 50.f, 12, FColor::Black, false, 2.0f);
 
 
 	if (LaunchSound)
@@ -59,8 +63,11 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	DrawDebugSphere(GetWorld(), GetActorLocation(), 50.f, 12, FColor::Red, false, 2.0f);
+
 	if (InstigatorController) UE_LOG(LogTemp, Error, TEXT("Get owner is nullptr!!!!"));
-	if(OtherActor && (OtherActor != this) && OtherComp)
+	// Kontrola, zda OtherActor není vlastníkem støely
+	if (OtherActor && OtherActor != this && OtherActor != OwnerActor && OtherComp)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("HITING something"));
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, InstigatorController, this, UDamageType::StaticClass());
@@ -69,6 +76,8 @@ void AProjectile::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, clas
 }
 void AProjectile::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	DrawDebugSphere(GetWorld(), GetActorLocation(), 50.f, 12, FColor::Yellow, false, 2.0f);
+
 	UE_LOG(LogTemp, Warning, TEXT("END overlap"));
 	Destroy();
 }
