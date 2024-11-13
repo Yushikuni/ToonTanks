@@ -20,6 +20,10 @@ AProjectile::AProjectile()
 	CapsuleComp = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
 	RootComponent = CapsuleComp;
 
+	CapsuleComp->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	CapsuleComp->SetCollisionObjectType(ECC_PhysicsBody);
+	CapsuleComp->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
+
 	//Adding meshes and attachet them
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
 	ProjectileMesh->SetupAttachment(RootComponent);
@@ -38,6 +42,9 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UE_LOG(LogTemp, Warning, TEXT("Begin Play - Projectile spawned at location: %s"), *GetActorLocation().ToString());
+
 
 	CapsuleComp->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnOverlapBegin);
 	CapsuleComp->OnComponentEndOverlap.AddDynamic(this, &AProjectile::OnOverlapEnd);
@@ -58,11 +65,15 @@ void AProjectile::BeginPlay()
 // Called every frame
 void AProjectile::Tick(float DeltaTime)
 {
+	UE_LOG(LogTemp, Warning, TEXT("TICK - Projectile spawned at location: %s"), *GetActorLocation().ToString());
+
 	Super::Tick(DeltaTime);
 }
 
 void AProjectile::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	UE_LOG(LogTemp, Warning, TEXT("OnOverlapBegin - Projectile spawned at location: %s"), *GetActorLocation().ToString());
+
 	DrawDebugSphere(GetWorld(), GetActorLocation(), 50.f, 12, FColor::Red, false, 2.0f);
 
 	if (InstigatorController) UE_LOG(LogTemp, Error, TEXT("Get owner is nullptr!!!!"));
@@ -76,6 +87,8 @@ void AProjectile::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, clas
 }
 void AProjectile::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	UE_LOG(LogTemp, Warning, TEXT("OnOverlapEnd - Projectile spawned at location: %s"), *GetActorLocation().ToString());
+
 	DrawDebugSphere(GetWorld(), GetActorLocation(), 50.f, 12, FColor::Yellow, false, 2.0f);
 
 	UE_LOG(LogTemp, Warning, TEXT("END overlap"));
