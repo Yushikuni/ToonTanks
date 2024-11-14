@@ -72,4 +72,6 @@ public:
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Owner Actor")
 	AActor* OwnerActor;
+
+	TWeakObjectPtr;
 };
