@@ -70,5 +70,6 @@ public:
 	AController* InstigatorController;
 
 private:
+	UPROPERTY(VisibleAnywhere, Category = "Owner Actor")
 	AActor* OwnerActor;
 };
